@@ -82,10 +82,14 @@ public class ToastTracker: SharedSequenceConvertibleType {
     public typealias SharingStrategy = DriverSharingStrategy
     private let _subject = PublishSubject<String>()
     
-    func trackState<O: ObservableConvertibleType>(from source: O) -> Observable<O.Element> {
+    func trackState<O: ObservableConvertibleType>(from source: O, toast: String) -> Observable<O.Element> {
         return source.asObservable().do { (element) in
-            if let ele = element as? NetBody, ele.code == 200 {
-                self._subject.onNext(ele.msg)
+            if let ele = element as? NetBody, ele.code == NetSuccessCode {
+                if toast.isEmpty {
+                    self._subject.onNext(ele.msg)
+                }else {
+                    self._subject.onNext(toast)
+                }
             }
         }
     }
@@ -108,7 +112,7 @@ public class ToastTracker: SharedSequenceConvertibleType {
 }
 
 extension ObservableConvertibleType {
-    public func trackToast(_ activityIndicator: ToastTracker) -> Observable<Element> {
-        return activityIndicator.trackState(from: self)
+    public func trackToast(_ activityIndicator: ToastTracker, toast: String = "") -> Observable<Element> {
+        return activityIndicator.trackState(from: self, toast: toast)
     }
 }

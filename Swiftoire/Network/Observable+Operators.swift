@@ -70,7 +70,7 @@ extension Observable where Element: Moya.Response {
                 throw MoyaError.jsonMapping(response)
             }
             
-            guard netBody.code == 200 else {
+            guard netBody.code == NetSuccessCode else {
                 throw MoyaError.jsonMapping(response)
             }
             
@@ -96,7 +96,7 @@ extension Observable where Element: Moya.Response {
                 throw MoyaError.jsonMapping(response)
             }
             
-            guard netBody.code == 200 else {
+            guard netBody.code == NetSuccessCode else {
                 throw MoyaError.jsonMapping(response)
             }
             

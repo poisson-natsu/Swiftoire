@@ -19,6 +19,9 @@ let BaseURL = ReleaseUrl
 
 let imageUrl = "https://image.baidu.com/"
 
+// 网络请求成功标识
+let NetSuccessCode = 200
+
 // ui
 
 let kScreenW = UIScreen.main.bounds.size.width
